@@ -174,7 +174,7 @@ function setDifficulty(difficultyVar) {
     case "easy":
       gameState.difficulty = "swineEasy";
       gameState.gridSize = 8;
-      gameState.numPigs = 8;      
+      gameState.numPigs = 8;   
       break;
         
     case "medium":
@@ -435,20 +435,33 @@ function generateGrid() {
   
   $('#playArea').html(htmlRow);
 }
-
+function checkGameState(){
+}
 function saveGameState(){
   localStorage.setItem("gameGridObject" + gameState.difficulty, JSON.stringify(gameState));
   localStorage.setItem("gameGridHtml" + gameState.difficulty, $("#playArea").html());
 }
 function loadGameState(){
-  $("#playArea").empty();  
-  gameState = JSON.parse(localStorage.getItem("gameGridObject" + gameState.difficulty));
-  $("#playArea").html(localStorage.getItem("gameGridHtml" + gameState.difficulty));
-  $timeCounter.html(gameState.time);
-  $counterNumber.html(gameState.numPigs - gameState.flaggedSquareCounter);
+  var loadedGameGrid = localStorage.getItem("gameGridHtml" + gameState.difficulty);
 
-  if (gameState.firstClick === false){
-    startTimer("restart");
+  //checks to make sure the stored information isn't shorter than the minimum possible length
+  if (loadedGameGrid.length > 624){
+    var loadedGameState = localStorage.getItem("gameGridObject" + gameState.difficulty);
+    var parsedGameState = JSON.parse(loadedGameState);  
+    
+    $("#playArea").empty();  
+    gameState = parsedGameState;
+    $("#playArea").html(loadedGameGrid);
+    $timeCounter.html(gameState.time);
+    $counterNumber.html(gameState.numPigs - gameState.flaggedSquareCounter);
+  
+    if (gameState.firstClick === false){
+      startTimer("restart");
+    }
+  }
+  else {
+    clearGameState();
+    initGame();
   }
 }
 
@@ -456,6 +469,7 @@ function clearGameState(){
   localStorage.removeItem("gameGridObject" + gameState.difficulty);
   localStorage.removeItem("gameGridHtml" + gameState.difficulty);  
 }
+
 function clearAllGameStates(){
   localStorage.removeItem("gameGridObjectswineEasy");
   localStorage.removeItem("gameGridHtmlswineEasy");   
@@ -811,7 +825,7 @@ function highScore() {
   //reveals the winning message after 1 second delay
   endMessageReveal(1);
   //reveals the high score name entry screen after 2 second delay
-  showHighScoreName(2);
+  showHighScoreName(1);
   //brings the current difficulty high score board to the top of of the high score board
   highScoreBoardTop(gameState.difficulty);
 }
@@ -982,7 +996,7 @@ function insertScores(rank) {
     for (var i = 0; i < highScoreInfo.easyScores.length; i++) {
       var firstPlace = '';
       if (i === 0) {
-        firstPlace = '&#x265a;'
+        firstPlace = '<span class= "iconFont">a</span>'
       }
       var className = '.place.' + rank + '.' + (i + 1);
       $(className)
@@ -1087,7 +1101,6 @@ function plusCharBox(boxName) {
   if (highScoreInfo.nameArray[charPosition] > highScoreInfo.alphaNum.length - 1) {
     changeValue = -(highScoreInfo.alphaNum.length - 1);
   }
-  
   changeCharacter(charPosition, changeValue);
 }
 
@@ -1470,13 +1483,11 @@ $('#back')
 
 $('#refresh')
   .on('vclick', function () {
-    if (!gameState.firstClick){
-      $clickBlocker.show();
-      clearTimer();
-      clearGameState();
-      setTimeout(resetPlayArea, 500);
-      setTimeout(initGame, 850);
-    }
+    $clickBlocker.show();
+    clearTimer();
+    clearGameState();
+    setTimeout(resetPlayArea, 500);
+    setTimeout(initGame, 850);
   });
 
 $('.counterPigBody')
@@ -1490,12 +1501,13 @@ $('.counterPigBody')
 function playAreaClickActions() { 
   //number of ms to hold down to flag a gamesquare as having a pig
   var longPress = 200; 
-
+  var cheatsEnabled = false;
+  
   //when a gamesquare is held down it starts a timer to flag the square and a timer for cheat mode
   $(".gameSquare")
     .on('vmousedown', function () {
       //number of ms to hold down a gamesquare to reveal pigs, cheat mode
-      var cheatPress = 5000; 
+      //var cheatPress = 5000; 
       var $boxId      = $(this);
       start          = new Date().getTime();
     
@@ -1514,21 +1526,24 @@ function playAreaClickActions() {
           updateFlaggedSquareCounter();
         }
       }, longPress);
-    
-      //if click held longer than cheatPress activate cheat mode (see all pigs)
-      cheatTimer = setTimeout(function () { 
-        //reveal pigs after 0.5 second delay
-        showPigs(0.5);
-        //cheatMode sets gameState.cheating to true so you cannot get a high score
-        gameState.cheating = true;    
-      }, cheatPress);
+      if(cheatsEnabled){
+        //if click held longer than cheatPress activate cheat mode (see all pigs)
+        cheatTimer = setTimeout(function () { 
+          //reveal pigs after 0.5 second delay
+          showPigs(0.5);
+          //cheatMode sets gameState.cheating to true so you cannot get a high score
+          gameState.cheating = true;    
+        }, cheatPress);
+      }
     });
   
   //if the player moves off the gameSquare cancel flagTimer and cheatTimer
   $(".gameSquare")
     .on('vmouseleave', function () {
       clearTimeout(flagTimer);
-      clearTimeOut(cheatTimer);
+      if(cheatsEnabled){
+        clearTimeOut(cheatTimer);
+      }
     });
 
   //on release of the gameSquare cancel the timers. If the press was shorter than a longpress treat it
@@ -1541,7 +1556,9 @@ function playAreaClickActions() {
       //stop the flagTimer               
       clearTimeout(flagTimer);
       //stop the cheatTimer
-      clearTimeout(cheatTimer);
+      if(cheatsEnabled){
+        clearTimeOut(cheatTimer);
+      }
     
       //if the click was held for shorter than longpress it's just a click
       if (newTime - start < longPress) {
@@ -1754,7 +1771,7 @@ function playAreaOff(delay, callback) {
 }
 
 //animates clicked button then runs a callback function with optional variable
-function buttonClick(button, callback) {
+function buttonClick(button) {
   TweenMax.to(button, 0.25, {
     force3D: true,
     backgroundColor: "white",
@@ -1764,7 +1781,6 @@ function buttonClick(button, callback) {
     onComplete: function(){
       //restores element's original background-color if fast clicking turns it permanently white
       button.css("background-color", "");
-      callback();
     }
   });
 }

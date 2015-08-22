@@ -1,11 +1,11 @@
 @font-face {
     font-family: 'sniglet';
-    src: url('sniglet-extrabold-webfont.eot');
-    src: url('sniglet-extrabold-webfont.eot?#iefix') format('embedded-opentype'),
-         url('sniglet-extrabold-webfont.woff2') format('woff2'),
-         url('sniglet-extrabold-webfont.woff') format('woff'),
-         url('sniglet-extrabold-webfont.ttf') format('truetype'),
-         url('sniglet-extrabold-webfont.svg#snigletextrabold') format('svg');
+    src: url('../fonts/sniglet-extrabold-webfont.eot');
+    src: url('../fonts/sniglet-extrabold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/sniglet-extrabold-webfont.woff2') format('woff2'),
+         url('../fonts/sniglet-extrabold-webfont.woff') format('woff'),
+         url('../fonts/sniglet-extrabold-webfont.ttf') format('truetype'),
+         url('../fonts/sniglet-extrabold-webfont.svg#snigletextrabold') format('svg');
     font-weight: 800;
     font-style: normal;
 
@@ -13,17 +13,32 @@
 
 @font-face {
     font-family: 'sniglet';
-    src: url('sniglet-regular-webfont.eot');
-    src: url('sniglet-regular-webfont.eot?#iefix') format('embedded-opentype'),
-         url('sniglet-regular-webfont.woff2') format('woff2'),
-         url('sniglet-regular-webfont.woff') format('woff'),
-         url('sniglet-regular-webfont.ttf') format('truetype'),
-         url('sniglet-regular-webfont.svg#snigletregular') format('svg');
+    src: url('../fonts/sniglet-regular-webfont.eot');
+    src: url('../fonts/sniglet-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/sniglet-regular-webfont.woff2') format('woff2'),
+         url('../fonts/sniglet-regular-webfont.woff') format('woff'),
+         url('../fonts/sniglet-regular-webfont.ttf') format('truetype'),
+         url('../fonts/sniglet-regular-webfont.svg#snigletregular') format('svg');
     font-weight: normal;
     font-style: normal;
 
 }
 
+@font-face {
+  font-family: "swinepeepericons";
+  src:url("../fonts/swinepeepericons.eot");
+  src:url("../fonts/swinepeepericons.eot?#iefix") format("embedded-opentype"),
+    url("../fonts/swinepeepericons.woff") format("woff"),
+    url("../fonts/swinepeepericons.ttf") format("truetype"),
+    url("../fonts/swinepeepericons.svg#swinepeepericons") format("svg");
+  font-weight: normal;
+  font-style: normal;
+
+}
+
+.iconFont {
+  font-family: swinepeepericons
+}
 body {
 	font-family: sniglet;
 	-webkit-touch-callout: none;
@@ -109,7 +124,7 @@ body {
 }
 .plus {
   line-height: 90%;
-  left: 53vh;
+  left: 54vh;
 }
 .minus {
   line-height: 90%;
@@ -225,38 +240,31 @@ body {
   background-color: #7FCCEE;
 }
 #previous {
-  line-height: 110%;
+  line-height: 120%;
   color: white;
-  font-size: 170%;
+  font-size: 150%;
   position: relative;
+  left: -0.5vh;
   float: left;
   height: 100%;
   width: 10%;
   text-decoration: none;
 }
 #next {
-  line-height: 110%;
+  line-height: 120%;
   color: white;
-  font-size: 170%;
+  font-size: 150%;
   position: relative;
+  text-align: center;
   float: right;
   height: 100%;
   width: 10%;
   text-decoration: none;
 }
 .left {
-  transform: scaleX(-1);
-  text-shadow: -.25vh .25vh black;
+  left: 12vh;
 }
-.down {
-  vertical-align: middle;
-  transform: rotate(90deg);
-  text-shadow: .25vh -.25vh black;
-}
-.up {
-  transform: rotate(-90deg);
-  text-shadow: -.25vh .25vh black;
-}
+
 /*START MENU*/
 #startMenu {
   overflow: visible;
@@ -379,7 +387,7 @@ body {
 #highScores {
   box-shadow: .5vh .5vh #005e58, .375vh .375vh #005e58 inset;
   color: yellow;
-  line-height: 130%;
+  line-height: 125%;
   top: 66vh;
   left: 0;
   bottom: 0;
@@ -398,47 +406,30 @@ body {
   bottom: 0;
   right: 0; 
 }
-#musicSVG {
+.musicIcon {
   position: relative;
-  height: 7vh;
-  width: 7vh;
-  top: 0.75vh;
+  font-size: 7.5vh;
+  top: .5vh;
 }
 .speakerIcon {
   position: relative;
-  float: left;
-  display: inline;
-  z-index: 10;
-  border-right: 3vh solid white;
-  border-bottom: 1.5vh solid transparent;
-  border-top: 1.5vh solid transparent;
-  height: 3vh;
-  width: 0vh;
-  left: 4vh;
-  top: 2.25vh;
-}
-.speakerIcon:before {  
-  position: absolute;
-  left: -1.25vh;
-  content: ' ';
-  background-color: white;
-  height: 3vh;
-  width: 0.75vh;
+  top: .25vh;
 }
 .speakerIcon.mute:after {
+  font-family: sniglet;
   position: absolute;
   content: '\\';
   color: red;
-  top: -3vh;
-  left: -1.25vh;
+  left: 2.25vh;
   font-size: 10vh;
   transform: rotate(80deg);
 }
 .musicIcon.mute:after {
+  font-family: sniglet;
   position: absolute;
   content: '\\';
   color: red;
-  top: 0.5vh;
+  top: 0vh;
   left: 2.75vh;
   font-size: 10vh;
   transform: rotate(80deg);
@@ -455,6 +446,10 @@ body {
   right: 0;
   margin: auto;
   display: none;
+}
+#highScoreContainer .iconFont {
+  position: relative;
+  top: .4vh;
 }
 .boardExit {
   left: -50vw;
@@ -761,7 +756,8 @@ span div.about:before{
   left: 15vh;
   background-color: #74C76D;
   box-shadow: .5vh .5vh #016738, .375vh .375vh #016738 inset;
-  border: 1vh solid #009933;  
+  border: 1vh solid #009933; 
+  line-height: 125%;
 }
 .circleButton.x {
   left: 38vh;
@@ -769,6 +765,7 @@ span div.about:before{
   box-shadow: .5vh .5vh #851722, .375vh .375vh #851722 inset;
   border: 1vh solid #bf1e2e;
   background-color: #ef4136;  
+  line-height: 130%;
 }
 /*PLAY AREA ITEMS*/
 #playArea {
@@ -1089,25 +1086,8 @@ span div.about:before{
   left: 0vh;
   bottom: 0;
   right: 30vh;
-  font-size: 8vh;
-  line-height: 125%;
-  font-size: 8.5vh;
-}
-
-#refresh span {
-  position: relative;
-  right: 2.5%;
-  display: block;
-  transform: rotate(85deg);
-  text-shadow: .25vh -.25vh black;
-}
-
-#back span {
-  position: relative;
-  right: 2%;
-  display: block;
-  transform: scale(-1, 1);
-  text-shadow: -.25vh .25vh black;
+  font-size: 7.5vh;
+  line-height: 145%;
 }
 
 #back {
@@ -1184,12 +1164,12 @@ span div.about:before{
   }
   .arrow.pigNumber.left,
   .arrow.gridNumber.left {
-    left: 27.5vw;
+    left: 15.5vw;
     
   }
   .arrow.pigNumber.plus,
   .arrow.gridNumber.plus {
-    left: 72.875vw;
+    left: 74.5vw;
   }
   .counterPigBody.custom {
 	font-size: 3.45vw;
@@ -1254,6 +1234,9 @@ span div.about:before{
     height: 90vw;
     bottom: 6vw;
   }
+  #highScoreContainer .iconFont {
+    top: .5vw;
+  }  
   .aboutContainer,
   .hardContainer {
     border-radius: 3vw;
@@ -1433,38 +1416,20 @@ span div.about:before{
     top: 110vw;
     left: 58vw;
   }
-  #musicSVG {
-    width: 10vw;
-    height: 10vw;
-    top: 1vw;
+  .musicIcon {
+    font-size: 10vw;
   }  
   .speakerIcon {
-  	border-right: 4.5vw solid white;
-  	border-bottom: 2.25vw solid transparent;
-  	border-top: 2.25vw solid transparent;
-  	height: 4.5vw;
-    left: 5.5vw;
-    top: 2.75vw;
-  }
-  .speakerIcon:before {  
-    left: -1.875vw;
-  	height: 4.5vw;
-  	width: 1.125vw;
+    top: 0.25vw;
   }
   .speakerIcon.mute:after {
-    top: -4.5vw;
-    left: -1.875vw;
+    left: 3.25vw;
     font-size: 15vw;
   }
   .musicIcon.mute:after {
-    top: 0.75vw;
+    top: 0vw;
     left: 3.5vw;
     font-size: 15vw;
-  }
-  .musicIcon:after {
-    top: 0.75vw;
-    left: 4.125vw;
-    font-size: 14vw;
   }
 
   /*PLAYAREA AND PLAY INFO ITEMS*/
@@ -1511,7 +1476,7 @@ span div.about:before{
 
   #refresh {
     top: 116.5vw;
-    font-size: 11.75vw;
+    font-size: 10.25vw;
     right: 40vw;
   }
 
@@ -1612,12 +1577,12 @@ span div.about:before{
   }
   .arrow.pigNumber.left,
   .arrow.gridNumber.left {
-    left: 30vh;
+    left: 17vh;
     
   }
   .arrow.pigNumber.plus,
   .arrow.gridNumber.plus {
-    left: 79.5vh;
+    left: 81.5vh;
   }
   .counterPigBody.custom {
 	font-size: 3.75vh;
@@ -1680,6 +1645,9 @@ span div.about:before{
     height: 90vh;
     bottom: 0;
   }
+  #highScoreContainer .iconFont {
+    top: .6vh;
+  }  
   .aboutContainer,
   .hardContainer {
     border-radius: 3vh;
@@ -1862,43 +1830,19 @@ span div.about:before{
     top: 65vh;
     left: 33vh;
   }
-  #musicSVG {
-    height: 12vh;
-    width: 12vh;
-    top: 2vh;
-  }
-  #musicSVG.gameScreen {
-    position: relative;
-    height: 9.5vh;
-    width: 9.5vh;
-    top: 1.5vh;
+  .musicIcon {
+    font-size: 12vh;
   }  
   .speakerIcon {
-  	border-right: 5.1vh solid white;
-  	border-bottom: 2.55vh solid transparent;
-  	border-top: 2.55vh solid transparent;
-  	height: 5.1vh;
-    left: 6.8vh;
-    top: 3.825vh;
-  }
-  .speakerIcon:before {  
-    left: -2.125vh;
-  	height: 5.1vh;
-  	width: 1.275vh;
-  }
+    top: 0.7vh;
+  }  
   .speakerIcon.mute:after {
-    top: -5.1vh;
-    left: -2.125vh;
+    left: 3.75vh;
     font-size: 17vh;
   }
   .musicIcon.mute:after {
     top: 1vh;
     left: 4vh;
-    font-size: 17vh;
-  }
-  .musicIcon:after {
-    top: 0.85vh;
-    left: 4.675vh;
     font-size: 17vh;
   }
   #gameLogo {
@@ -1978,26 +1922,19 @@ span div.about:before{
     top: 75vh;
   }
   #refresh {  
-  	font-size: 10.5vh;
+  	font-size: 9.5vh;
   	top: 12vh;
   	left: -52vh;
   }
+  .gameScreen > .musicIcon {
+	font-size: 9.5vh;
+  }  
   .gameScreen > .speakerIcon {
-	border-right: 3.9vh solid white;
-	border-bottom: 1.95vh solid transparent;
-	border-top: 1.95vh solid transparent;
 	height: 3.9vh;
-    left: 5.2vh;
-    top: 2.925vh;
-  }
-  .gameScreen > .speakerIcon:before {  
-    left: -1.625vh;
-  	height: 3.9vh;
-  	width: 0.975vh;
+    top: .25vh;
   }
   .gameScreen > .speakerIcon.mute:after {
-    top: -3.9vh;
-    left: -1.625vh;
+    left: 3vh;
     font-size: 13vh;
   }
   .gameScreen > .musicIcon:after {
